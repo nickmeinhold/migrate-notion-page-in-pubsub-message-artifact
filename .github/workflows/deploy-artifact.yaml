@@ -1,0 +1,46 @@
+name: deploy-artifact
+on:
+  push:
+
+jobs:
+  docker-release:
+    name: Tagged Docker release to Google Artifact Registry
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')  # only run when a tagged commit is pushed
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: access_token
+          workload_identity_provider: 'projects/543139203885/locations/global/workloadIdentityPools/workload-id-pool/providers/workload-provider'
+          service_account: 'github-actions-sa@projects-monthly.iam.gserviceaccount.com'
+          access_token_lifetime: 300s
+      
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v1
+        with:
+          registry: us-central1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Get tag
+        id: get-tag
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .subtree/migrate_notion_page_in_pubsub_message/
+          push: true
+          tags: |
+             us-central1-docker.pkg.dev/projects-monthly/image-repo/migrate-notion-page-in-pubsub-message-image:${{ steps.get-tag.outputs.short_ref }}
+             us-central1-docker.pkg.dev/projects-monthly/image-repo/migrate-notion-page-in-pubsub-message-image:latest
