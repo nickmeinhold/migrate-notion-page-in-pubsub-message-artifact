@@ -9,9 +9,12 @@ environment:
 dependencies:
   shelf: ^1.4.0
   http: ^1.0.0
-  json_utils: ^0.0.0-a1
-  discord_application_utils: ^0.0.0-a1
+  json_utils:
+    git: https://github.com/enspyrco/json_utils
+  discord_application_utils:
+    git: https://github.com/enspyrco/discord_application_utils
 
 dev_dependencies:
-  enspyr_lints: ^0.0.0-a1
+  enspyr_lints:
+    git: https://github.com/enspyrco/enspyr_lints
   test: ^1.21.0
