@@ -9,7 +9,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 Future<Response> handler(Request request) async {
   try {
     final String bodyString = await request.readAsString();
-    // final JsonMap bodyJson = jsonDecode(bodyString);
+    final JsonMap bodyJson = jsonDecode(bodyString);
     // print('body:\n$bodyJson');
     print(bodyString);
 
