@@ -10,16 +10,20 @@ void main() async {
       version: 8);
 
   var slashCommand = ApplicationCommand(
-    type: ApplicationCommandType.chatInput,
-    name: 'migrate',
-    description:
-        'Enter a Notion page id to migrate into the current channel...',
-  );
+      type: ApplicationCommandType.chatInput,
+      name: 'migrate',
+      description: 'Migrate a Notion page into the current channel...',
+      options: [
+        ApplicationCommandOption(
+            type: ApplicationCommandOptionType.string,
+            name: 'url',
+            description: 'Enter the URL of the Notion page to migrate')
+      ]);
 
   var response = await client.createCommand(slashCommand);
 
   // var response = await client.getCommands();
-  // var response = await api.deletCommand('...');
+  // var response = await client.deletCommand('...');
 
   print(response.body);
 }
