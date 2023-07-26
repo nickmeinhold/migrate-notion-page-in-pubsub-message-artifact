@@ -25,18 +25,17 @@ Future<Response> handler(Request request) async {
         json.decode(utf8.decode(base64.decode(encodedMessageData))) as JsonMap;
     print('decodedMessageJson: $decodedMessageJson');
 
-    final InteractionData interactionData =
-        extractMessageCommandInfo(decodedMessageJson);
+    final Interaction interaction = Interaction.fromJson(decodedMessageJson);
 
-    print(interactionData);
+    print(interaction);
 
     // construct the uri we will use to update the Discord response
     var uri = Uri.parse(
-        "https://discord.com/api/v8/webhooks/${interactionData.applicationId}/${interactionData.token}/messages/@original");
+        "https://discord.com/api/v8/webhooks/${interaction.applicationId}/${interaction.token}/messages/@original");
 
     // Make a http call to edit the interaction response
-    var response =
-        await http.patch(uri, body: {'content': interactionData.content});
+    var response = await http
+        .patch(uri, body: {'content': interaction.data?.options.first.value});
 
     print('response:\n${response.body}');
 

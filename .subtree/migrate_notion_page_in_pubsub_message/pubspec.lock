@@ -45,10 +45,10 @@ packages:
     dependency: transitive
     description:
       name: collection
-      sha256: f092b211a4319e98e5ff58223576de6c2803db36221657b46c82574721240687
+      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.2"
+    version: "1.18.0"
   convert:
     dependency: transitive
     description:
@@ -86,7 +86,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: efcb718855bf1adbcc26b9611bfac71cceae5a60
+      resolved-ref: e0fa6772b6873c5c822fdd3e8ae1ee5fb5991236
       url: "https://github.com/enspyrco/discord_application_utils"
     source: git
     version: "0.0.0-a1"
@@ -176,7 +176,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e529466ef5139593620fa3a7a958a026539f232c
+      resolved-ref: bdb1184346cb74a88c9e070afcf8952a2a20bd7e
       url: "https://github.com/enspyrco/json_utils"
     source: git
     version: "0.0.0-a1"
