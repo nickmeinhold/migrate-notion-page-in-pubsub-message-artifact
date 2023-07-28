@@ -1,0 +1,18 @@
+name: notion_api_client
+description: A Dart client for the Notion API.
+version: 0.0.0-a1
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  http: ^1.1.0
+  html: ^0.15.4
+  api_client_utils:
+    git: https://github.com/enspyrco/api_client_utils
+
+dev_dependencies:
+  enspyr_lints:
+    git: https://github.com/enspyrco/enspyr_lints
+  test: ^1.24.4
