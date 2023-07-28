@@ -9,6 +9,8 @@ environment:
 dependencies:
   shelf: ^1.4.0
   http: ^1.0.0
+  notion_api_client:
+    git: https://github.com/enspyrco/notion_api_client
   json_utils:
     git: https://github.com/enspyrco/json_utils
   discord_application_utils:

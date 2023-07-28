@@ -47,3 +47,27 @@ git subtree push --prefix .subtree/migrate_notion_page_in_pubsub_message git@git
 ```
 
 Usage:
+
+## notion_api_client
+
+[repo](https://github.com/enspyrco/notion_api_client)
+
+Added with:
+
+```sh
+git subtree add --prefix .subtree/notion_api_client git@github.com:enspyrco/notion_api_client.git main --squash
+```
+
+Pull with:
+
+```sh
+git subtree pull --prefix .subtree/notion_api_client git@github.com:enspyrco/notion_api_client.git main --squash
+```
+
+Push with:
+
+```sh
+git subtree push --prefix .subtree/notion_api_client git@github.com:enspyrco/notion_api_client.git main
+```
+
+Usage:

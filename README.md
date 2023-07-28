@@ -17,7 +17,7 @@ This is an `artifact project` that collects `code project`s as git subtrees, alo
 - [ ]  Click the big green button: “Publish release”
 
 > Then you’ll need to manually deploy a new revision of the Cloud Run service with the latest image:
-> 
+>
 
 - [ ] Go to the [projects-monthly](https://console.cloud.google.com/run?project=projects-monthly) Cloud Console for Cloud Run
 - [ ]  Select the relevant service
