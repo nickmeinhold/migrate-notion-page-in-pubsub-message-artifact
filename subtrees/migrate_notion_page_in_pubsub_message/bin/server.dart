@@ -27,7 +27,7 @@ Future<Response> handler(Request request) async {
 
     var client = NotionClient(token: tokenForNotion!);
 
-    return Response.ok();
+    return Response.ok('Success.');
   } catch (e, s) {
     print('Exception:\n$e\n\nTrace:\n$s');
     return Response.internalServerError();
