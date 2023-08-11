@@ -1,45 +1,33 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:discord_application_utils/discord_application_utils.dart';
-import 'package:http/http.dart' as http;
 import 'package:json_utils/json_utils.dart';
+import 'package:notion_api_client/notion_api_client.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'package:shelf_gcp_utils/shelf_gcp_utils.dart';
+
+String? tokenForNotion = Platform.environment['NOTION_TOKEN'];
 
 Future<Response> handler(Request request) async {
   try {
-    final String bodyString = await request.readAsString();
-    final JsonMap bodyJson = jsonDecode(bodyString);
-    // print('body:\n$bodyJson');
+    verifyEnvironmentState();
+
+    // Retrieve and log the request body
+    String bodyString = await request.readAsString();
     print(bodyString);
 
-    final JsonMap messageJson = bodyJson['message'] as JsonMap? ??
-        (throw MalformedJsonException(
-            'The "message" key was not found at the top level', bodyJson));
+    // Extract the Pub/Sub message and use it to make an object that will
+    // handle the Discord interaction
+    JsonMap pubsubMessage = extractPubSubMessage(bodyString);
+    final interactor = DiscordInteractor(interactionJson: pubsubMessage);
 
-    final String encodedMessageData = messageJson['data'] as String? ??
-        (throw MalformedJsonException(
-            '"data" key was not found in "message" object', bodyJson));
+    // Retrieve the Notion page URL, which was given as a slash command option
+    String pageUrl = interactor.getOptionValue<String>(name: 'url')!;
 
-    final JsonMap decodedMessageJson =
-        json.decode(utf8.decode(base64.decode(encodedMessageData))) as JsonMap;
-    print('decodedMessageJson: $decodedMessageJson');
+    var client = NotionClient(token: tokenForNotion!);
 
-    final Interaction interaction = Interaction.fromJson(decodedMessageJson);
-
-    print(interaction);
-
-    // construct the uri we will use to update the Discord response
-    var uri = Uri.parse(
-        "https://discord.com/api/v8/webhooks/${interaction.applicationId}/${interaction.token}/messages/@original");
-
-    // Make a http call to edit the interaction response
-    var response = await http
-        .patch(uri, body: {'content': interaction.data?.options.first.value});
-
-    print('response:\n${response.body}');
-
-    return Response.ok('...');
+    return Response.ok();
   } catch (e, s) {
     print('Exception:\n$e\n\nTrace:\n$s');
     return Response.internalServerError();
@@ -50,4 +38,8 @@ void main(List<String> args) async {
   shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
     print('Serving at https://${server.address.host}:${server.port}');
   });
+}
+
+void verifyEnvironmentState() {
+  if (tokenForNotion == null) throw 'Please set "NOTION_TOKEN" env var.';
 }

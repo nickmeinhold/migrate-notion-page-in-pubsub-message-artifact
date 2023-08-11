@@ -1,6 +1,7 @@
 name: migrate_notion_page_in_pubsub_message
 description: A Dart microservice that retrieves a Notion page using the URL received in a Pub/Sub message.
 version: 0.0.0-a1
+publish_to: none
 # repository: https://github.com/my_org/my_repo
 
 environment:
@@ -8,13 +9,14 @@ environment:
 
 dependencies:
   shelf: ^1.4.0
-  http: ^1.0.0
   notion_api_client:
     git: https://github.com/enspyrco/notion_api_client
   json_utils:
     git: https://github.com/enspyrco/json_utils
   discord_application_utils:
     git: https://github.com/enspyrco/discord_application_utils
+  shelf_gcp_utils:
+    git: https://github.com/enspyrco/shelf_gcp_utils
 
 dev_dependencies:
   enspyr_lints:
